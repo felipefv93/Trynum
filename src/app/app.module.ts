@@ -9,16 +9,17 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyCjB0ZGiHLUZ27dMsdOSSjtdgWyzvwwzf0",
-  authDomain: "bandapp-21ea7.firebaseapp.com",
-  databaseURL: "https://bandapp-21ea7.firebaseio.com",
-  projectId: "bandapp-21ea7",
-  storageBucket: "bandapp-21ea7.appspot.com",
-  messagingSenderId: "146443321753"
+  apiKey: "AIzaSyDSwmcgToRlFNWUprmFwt-bcUCAv2a7XFM",
+  authDomain: "trynum-4006f.firebaseapp.com",
+  databaseURL: "https://trynum-4006f.firebaseio.com",
+  projectId: "trynum-4006f",
+  storageBucket: "trynum-4006f.appspot.com",
+  messagingSenderId: "36400295116"
 }
 //Services
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth.guard';
+import { UsuarioService } from './services/usuario.service';
 //Rutas
 import { AppRoutes } from './app.routing';
 
@@ -48,7 +49,7 @@ import { NavbarModule } from './shared/navbar/navbar.module';
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [AuthService,AuthGuard],
+  providers: [AuthService,AuthGuard,UsuarioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

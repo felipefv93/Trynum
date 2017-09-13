@@ -17,18 +17,16 @@ export const AppRoutes: Routes = [
       children: [
           {
             path: '',
-            loadChildren: './dashboard/dashboard.module#DashboardModule',
-            canActivateChild:[AuthGuard]
+            loadChildren: './dashboard/dashboard.module#DashboardModule'
           },
           {
             path: 'inicial',
-            loadChildren: './inicial/inicial.module#InicialModule',
-            canActivateChild:[AuthGuard]
+            loadChildren: './inicial/inicial.module#InicialModule'
           },
           {
             path: 'catalogo',
-            loadChildren: './catalogo/catalogo.module#CatalogoModule',
-            canActivateChild:[AuthGuard]
+            loadChildren: './catalogo/catalogo.module#CatalogoModule'
+            // canActivateChild:[AuthGuard]
           }
   ]
     },

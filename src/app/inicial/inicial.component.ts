@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, AfterViewInit } from '@angular/core';
 import { FirebaseApp } from 'angularfire2';
 import { AngularFireDatabase,FirebaseListObservable } from 'angularfire2/database';
 import { AuthService } from '../services/auth.service';
+import { Usuario } from '../modelos/usuario'
 import 'firebase/storage';
 
 
@@ -23,43 +24,55 @@ export class InicialComponent implements OnInit , OnChanges, AfterViewInit{
   desing:boolean = true;
   code:boolean = true;
   develop:boolean = true;
-  datosUsuario:any = {
-    nombre:"Felipe",
-    apellidos:"Fierro Villalobos",
-    email:this.servicio.usuario.email,
-    nombreUsuario:"felipefv93",
-    nombreMostrar:"Felipe Fierro",
-    opciones:{
-      vendedor:false,
-      proveedor:true
-    },
-    direccion:{
-      calle:"Margarita",
-      numero:"106",
-      ciudad:"Delicias",
-      estado:"Chih.",
-      pais:""
-    }
-  }
+  datosUsuario:Usuario = new Usuario();
+//   any = {
+//     nombre:"Felipe",
+//     apellidos:"Fierro Villalobos",
+//     email:this.servicio.usuario.email,
+//     nombreUsuario:"felipefv93",
+//     nombreMostrar:"Felipe Fierro",
+//     opciones:{
+//       vendedor:false,
+//       proveedor:true
+//     },
+//     direccion:{
+//       calle:"Margarita",
+//       numero:"106",
+//       ciudad:"Delicias",
+//       estado:"Chih.",
+//       pais:""
+//     }
+//   }
 
-  constructor(private firebaseApp:FirebaseApp,private servicio:AuthService,private db:AngularFireDatabase){}
+  constructor(private firebaseApp:FirebaseApp,private servicio:AuthService){
+        
+  }
   prueba(event){
     console.log(event);
   }
   guardar() {
-    this.datosUsuario.opciones.vendedor= $('#vendedor')[0].checked;
-    this.datosUsuario.opciones.proveedor= $('#proveedor')[0].checked;
-    console.log($('#design'));
-    console.log(this.datosUsuario);
-    let storageRef = this.firebaseApp.storage().ref();
-    let path = "/img/perfil/"+this.servicio.usuario.uid; //+ this.imagen.name;
-    var iRef = storageRef.child(path);
-    iRef.getDownloadURL().then(success=>{
-      // console.log(success);
+      
+    this.servicio.datosUsuario.opciones.vendedor= $('#vendedor')[0].checked;
+    this.servicio.datosUsuario.opciones.proveedor= $('#proveedor')[0].checked;
+    this.servicio.datosUsuario.opciones.configuracionInicial=true;
+    this.servicio.actualizarDatosUsuario().then((success)=>{
+        console.log(success);
+    },(err)=>{
+        console.log(err);
     })
-    // iRef.put(this.imagen).then((success) => {
-    //   console.log(success);
-    // })
+    console.log(this.imagen);
+    console.log(this.datosUsuario);
+    if(this.imagen!=undefined){
+        let storageRef = this.firebaseApp.storage().ref();
+        let path = "/img/perfil/"+this.servicio.usuario.uid; //+ this.imagen.name;
+        var iRef = storageRef.child(path);
+        // iRef.getDownloadURL().then(success=>{
+        //   // console.log(success);
+        // })
+        iRef.put(this.imagen).then((success) => {
+          console.log(success);
+        })
+      }
   }
   readURL(input) {
     var archivos = input.srcElement.files;
@@ -78,25 +91,22 @@ ngOnInit(){
     // Code for the Validator
     var $validator = $('.wizard-card form').validate({
       rules: {
-        firstname: {
+        nombre: {
           required: true,
           minlength: 3
         },
-        lastname: {
+        apellidoPaterno: {
           required: true,
           minlength: 3
         },
-        username: {
-          required: true,
-          minlength: 3
-        },
-        email: {
-          required: true,
-          minlength: 3,
-        }
+        apellidoMaterno: {
+            required: true,
+            minlength: 3
+          }
         },
 
         errorPlacement: function(error, element) {
+            console.log(error);
             $(element).parent('div').addClass('has-error');
          }
   });

@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
-import { Observable  } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/delay';
+import { UsuarioService } from '../services/usuario.service';
 import * as firebase from 'firebase/app';
 import { isNullOrUndefined } from "util";
 import { Router } from "@angular/router";
@@ -13,13 +10,17 @@ import { Router } from "@angular/router";
 export class AuthService {
   error:any;
   usuario:firebase.User;
-  datosUsuario:FirebaseObjectObservable<any>;
+  datosUsuario:any;
+  usuarioObser:FirebaseObjectObservable<any>;
   isLogged:boolean=false;
   redirectUrl:string;
   datosUsuario2:any;
   ecommerce:boolean;
 
-  constructor(private afAuth:AngularFireAuth, private db:AngularFireDatabase,private router:Router) { 
+  constructor(private afAuth:AngularFireAuth,
+     private db:AngularFireDatabase,
+     private router:Router,
+    private servicioUsuario:UsuarioService) { 
     // this.afAuth.auth.signOut();
   }
 
@@ -31,26 +32,26 @@ export class AuthService {
           this.isLogged=false;
           resolve(false);
         }else{
+            this.servicioUsuario.usuario= auth;
           this.usuario=auth;
           this.isLogged=true;
-          resolve(true);
+          this.servicioUsuario.obtenerDatosUsuario().then((success)=>{
+              console.log(success);
+              resolve(true);
+          }).catch((err)=>{
+                  console.log(err);
+          });
+          
         }
       })
     })
   }
-  obtenerDatosUsuario(): Promise<any>{
-    //    console.log("entro a obtenerDatosUsuario "+this.usuario.uid);
-    return new Promise(resolve => {
-        // Simulate server latency with 2 second delay
-        // this.datosUsuario=this.db.object('/users/'+this.usuario.uid);
-        // resolve(this.datosUsuario);
-        resolve(this.db.object('/users/'+this.usuario.uid));
-        // this.datosUsuario.subscribe(usuario=>{
-        //     resolve(usuario);
-        // })
+  actualizarDatosUsuario():Promise<any>{
+      return new Promise(resolve=>{
         
+        resolve(this.db.object('/users/'+this.usuario.uid).update(this.datosUsuario));
       });
-   }
+  }
   emailLogin(email:string,password:string){
       // console.log("email: "+email+" pass: "+password);
       this.afAuth.auth.signInWithEmailAndPassword(email,password)

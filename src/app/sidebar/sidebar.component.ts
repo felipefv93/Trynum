@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthService } from '../services/auth.service';
+import { UsuarioService } from '../services/usuario.service';
+import { Usuario } from '../modelos/usuario';
 
 import * as firebase from 'firebase/app';
 
@@ -17,37 +19,13 @@ var sidebarTimer;
   styles: []
 })
 export class SidebarComponent implements OnInit {
+    hayDatos:boolean= false;
   public menuItems: any[];
-  usuario:firebase.User;
-  datosUsuario:any;
 
-  constructor(private router:Router,private servicio:AuthService,private afAuth:AngularFireAuth){
-    this.servicio.obtenerDatosUsuario().then(success=>{
-      success.subscribe(u=>{
-        this.datosUsuario=u;
-        this.usuario=this.servicio.usuario;
-        if(!this.datosUsuario.opciones.configuracionInicial){
-          this.router.navigateByUrl('inicial');
-        }
-      },err=>{});
-    });
-    //   console.log(this.servicio.usuario);
-    // this.name= this.servicio.usuario;
-    // if(this.servicio.isLogged){
-    //     this.servicio.obtenerDatosUsuario().then(success=>{
-    //         // console.log(success);
-    //         this.datosUsuario2 = success;
-    //         this.datosUsuario2.subscribe(u=>{
-    //             this.datos = u;
-    //             this.ecommerce = u.roles.ecommerce;
-    //         },err=>{
-    //             // console.log(err);
-    //         });
-    //     }).catch((err)=>{
-    //         console.log("sasdasd");
-    //     })
-        
-    // }
+  constructor(private router:Router,
+    private servicio:AuthService,
+    private afAuth:AngularFireAuth,
+    private servicioUsuario:UsuarioService){
     
 
 }
@@ -59,6 +37,17 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.servicio.obtenerDatosUsuario().then(success=>{
+    //     success.subscribe(u=>{
+    //       this.datosUsuario=u;
+    //       this.usuario=this.servicio.usuario;
+    //       if(!this.datosUsuario.opciones.configuracionInicial){
+    //         this.router.navigateByUrl('inicial');
+    //       }
+    //       this.hayDatos=true;
+    //     },err=>{});
+    //   });
+
       var isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
       if (isWindows){
          // if we are on windows OS we activate the perfectScrollbar function

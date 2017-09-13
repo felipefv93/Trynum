@@ -1,5 +1,5 @@
 
-
+<div>
         <div class="logo">
                 <div class="logo-normal" >
                     <a href="https://www.creative-tim.com" class="simple-text">
@@ -10,19 +10,19 @@
                 <div class="logo-img">
                     <img src="/assets/img/angular2-logo-white.png"/>
                 </div>
-            </div>
+        </div>
     
     
             <div class="sidebar-wrapper">
     
                 <div class="user">
-                    <div class="photo" *ngIf="usuario">
-                        <img [src]="usuario.photoURL" />
+                    <div class="photo" *ngIf="servicioUsuario.usuario">
+                        <img [src]="servicioUsuario.usuario.photoURL" />
                     </div>
-                    <div class="info" *ngIf="datosUsuario">
+                    <div class="info" *ngIf="servicioUsuario.datosUsuario">
                         <a data-toggle="collapse" href="#collapseExample" class="collapsed" >
                             <span>
-                                {{datosUsuario.nombreMostrar}}
+                                {{servicioUsuario.datosUsuario.nombreMostrar}}
                                 
                                 <b class="caret"></b>
                             </span>
@@ -112,7 +112,7 @@
                         <li class="separator hidden-lg hidden-md"></li>
                     </ul>
                 </div>
-                <div class="nav-container" *ngIf="false">
+                <div class="nav-container" *ngIf="servicioUsuario.datosUsuario.opciones.configuracionInicial">
                     <ul class="nav">
                         <li routerLinkActive="active">
                             <a  [routerLink]="[menuItems[0].path]">
@@ -135,7 +135,7 @@
                                             <span class="sidebar-normal">{{menuItems[1].title}}</span>
                                         </a>
                                     </li>
-                                    <li routerLinkActive="active" >
+                                    <li routerLinkActive="active" *ngIf="servicioUsuario.datosUsuario.opciones.proveedor">
                                             <a  [routerLink]="[menuItems[2].path]">
                                                 <span class="sidebar-mini">E</span>
                                                 <span class="sidebar-normal">{{menuItems[2].title}}</span>
@@ -208,3 +208,4 @@
     
             </div>
     
+</div>            
