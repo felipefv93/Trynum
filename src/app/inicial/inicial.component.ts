@@ -1,9 +1,10 @@
 import { Component, OnInit, OnChanges, AfterViewInit } from '@angular/core';
 import { FirebaseApp } from 'angularfire2';
 import { AngularFireDatabase,FirebaseListObservable } from 'angularfire2/database';
-import { AuthService } from '../services/auth.service';
+import { UsuarioService } from '../services/usuario.service';
 import { Usuario } from '../modelos/usuario'
 import 'firebase/storage';
+import { Router } from "@angular/router";
 
 
 declare var $:any;
@@ -25,26 +26,10 @@ export class InicialComponent implements OnInit , OnChanges, AfterViewInit{
   code:boolean = true;
   develop:boolean = true;
   datosUsuario:Usuario = new Usuario();
-//   any = {
-//     nombre:"Felipe",
-//     apellidos:"Fierro Villalobos",
-//     email:this.servicio.usuario.email,
-//     nombreUsuario:"felipefv93",
-//     nombreMostrar:"Felipe Fierro",
-//     opciones:{
-//       vendedor:false,
-//       proveedor:true
-//     },
-//     direccion:{
-//       calle:"Margarita",
-//       numero:"106",
-//       ciudad:"Delicias",
-//       estado:"Chih.",
-//       pais:""
-//     }
-//   }
 
-  constructor(private firebaseApp:FirebaseApp,private servicio:AuthService){
+  constructor(private firebaseApp:FirebaseApp,
+    private servicio:UsuarioService,
+    private router:Router){
         
   }
   prueba(event){
@@ -56,27 +41,29 @@ export class InicialComponent implements OnInit , OnChanges, AfterViewInit{
     this.servicio.datosUsuario.opciones.proveedor= $('#proveedor')[0].checked;
     this.servicio.datosUsuario.opciones.configuracionInicial=true;
     this.servicio.actualizarDatosUsuario().then((success)=>{
-        console.log(success);
+        if(this.imagen!=undefined){
+            let storageRef = this.firebaseApp.storage().ref();
+            let path = "/img/perfil/"+this.servicio.usuario.uid; //+ this.imagen.name;
+            var iRef = storageRef.child(path);
+            // iRef.getDownloadURL().then(success=>{
+            //   // console.log(success);
+            // })
+            iRef.put(this.imagen).then((success) => {
+                this.servicio.actualizarImagenPerfil(success.metadata.downloadURLs[0])
+                .then((success)=>{
+                    this.router.navigateByUrl('dashboard');
+                })
+            })
+          }else{
+            this.router.navigateByUrl('dashboard');
+          }
     },(err)=>{
         console.log(err);
     })
-    console.log(this.imagen);
-    console.log(this.datosUsuario);
-    if(this.imagen!=undefined){
-        let storageRef = this.firebaseApp.storage().ref();
-        let path = "/img/perfil/"+this.servicio.usuario.uid; //+ this.imagen.name;
-        var iRef = storageRef.child(path);
-        // iRef.getDownloadURL().then(success=>{
-        //   // console.log(success);
-        // })
-        iRef.put(this.imagen).then((success) => {
-          console.log(success);
-        })
-      }
+    
   }
   readURL(input) {
     var archivos = input.srcElement.files;
-    console.log(input.srcElement.files);
     if (archivos && archivos[0]) {
         var reader = new FileReader();
 
@@ -268,7 +255,7 @@ ngOnInit(){
     });
 
     $('[data-toggle="wizard-radio"]').click(function(){
-        console.log('click');
+        // console.log('click');
 
         var wizard = $(this).closest('.wizard-card');
         wizard.find('[data-toggle="wizard-radio"]').removeClass('active');
@@ -278,7 +265,7 @@ ngOnInit(){
     });
 
     $('[data-toggle="wizard-checkbox"]').click(function(){
-        console.log(this);
+        // console.log(this);
         if( $(this).hasClass('active')){
             $(this).removeClass('active');
             $(this).find('[type="checkbox"]').removeAttr('checked');

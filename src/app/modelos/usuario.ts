@@ -4,6 +4,7 @@ export class Usuario{
     apellidoMaterno:string;
     correo:string;
     nombreUsuario:string;
+    nombreMostrar:string;
     telefono:string;
     descripcion:string;
     fechaCreacion:number;
@@ -16,6 +17,7 @@ export class Usuario{
         this.apellidoMaterno='';
         this.correo='';
         this.nombreUsuario='';
+        this.nombreMostrar='';
         this.telefono='';
         this.descripcion='';
         this.fechaCreacion=0;

@@ -41,9 +41,9 @@ export class SidebarComponent implements OnInit {
     //     success.subscribe(u=>{
     //       this.datosUsuario=u;
     //       this.usuario=this.servicio.usuario;
-    //       if(!this.datosUsuario.opciones.configuracionInicial){
-    //         this.router.navigateByUrl('inicial');
-    //       }
+          if(!this.servicioUsuario.datosUsuario.opciones.configuracionInicial){
+            this.router.navigateByUrl('inicial');
+          }
     //       this.hayDatos=true;
     //     },err=>{});
     //   });

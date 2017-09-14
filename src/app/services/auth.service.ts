@@ -5,17 +5,13 @@ import { UsuarioService } from '../services/usuario.service';
 import * as firebase from 'firebase/app';
 import { isNullOrUndefined } from "util";
 import { Router } from "@angular/router";
+import { Usuario } from "../modelos/usuario";
 
 @Injectable()
 export class AuthService {
   error:any;
   usuario:firebase.User;
-  datosUsuario:any;
-  usuarioObser:FirebaseObjectObservable<any>;
   isLogged:boolean=false;
-  redirectUrl:string;
-  datosUsuario2:any;
-  ecommerce:boolean;
 
   constructor(private afAuth:AngularFireAuth,
      private db:AngularFireDatabase,
@@ -46,17 +42,12 @@ export class AuthService {
       })
     })
   }
-  actualizarDatosUsuario():Promise<any>{
-      return new Promise(resolve=>{
-        
-        resolve(this.db.object('/users/'+this.usuario.uid).update(this.datosUsuario));
-      });
-  }
   emailLogin(email:string,password:string){
       // console.log("email: "+email+" pass: "+password);
       this.afAuth.auth.signInWithEmailAndPassword(email,password)
       .then((success)=>{
           this.usuario=success.user;
+          this.servicioUsuario.usuario=success.user;
           // console.log("Inicio Sesion");
           this.router.navigateByUrl('dashboard');
           return true;
@@ -70,10 +61,16 @@ export class AuthService {
   facebookLogin(){
       this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
       .then((success)=>{
-        return this.verificarUsuario(success);
-      
-      // this.router.navigateByUrl('dashboard');
-      //     return true;
+        this.servicioUsuario.verificarUsuario(success)
+        .then((success)=>{
+          if(success){
+              this.router.navigateByUrl('dashboard');
+              return true;
+          }
+        }).catch((err)=>{
+            console.log(err);
+            return false;
+        })
       })
       .catch((err)=>{
         this.error=err;
@@ -83,7 +80,16 @@ export class AuthService {
   googleLogin(){
       this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then((success)=>{
-          return this.verificarUsuario(success);
+           this.servicioUsuario.verificarUsuario(success)
+          .then((success)=>{
+            if(success){
+                this.router.navigateByUrl('dashboard');
+                return true;
+            }
+          }).catch((err)=>{
+              console.log(err);
+              return false;
+          })
       })
       .catch((err)=>{
           this.error= err;
@@ -93,8 +99,9 @@ export class AuthService {
   cerrarSesion(){
       this.afAuth.auth.signOut()
       .then((success)=>{
-          this.datosUsuario=null;
           this.usuario=null;
+          this.servicioUsuario.usuario=null;
+          this.servicioUsuario.datosUsuario=new Usuario();
           this.router.navigateByUrl('pages/login');
           
       })
@@ -103,58 +110,27 @@ export class AuthService {
           this.error = err;
       });
   }
-  verificarUsuario(success:any):boolean{
-
-      const itemObservable = this.db.object('/users/'+success.user.uid);
-      itemObservable.subscribe(u=>{
-          if(u.fechaCreacion == undefined){
-              itemObservable.set({ 
-                  nombreMostrar: success.user.displayName,
-                  fechaCreacion:new Date().getTime(),
-                  roles: {admin:false,ecommerce:false},
-                  opciones:{configuracionInicial:false}
-              });
-              this.router.navigateByUrl('dashboard');
-              return true;
-          }else{
-              this.datosUsuario = itemObservable;
-              this.router.navigateByUrl('dashboard');
-              return true;
-          }
-      },err=>{
-      // console.log(err);
-      return true;
-  })
-  return true;
-  }
-  crearUsuario(name:string,email:string,password:string){
+  crearUsuario(nombreUsuario:string,email:string,password:string){
       // console.log(name+' '+email);
       this.afAuth.auth.createUserWithEmailAndPassword(email,password)
       .then((success)=>{
+          this.servicioUsuario.crearUsuario(success.uid,nombreUsuario);
+            this.afAuth.auth.currentUser.updateProfile({displayName:name,photoURL:''})
+            .then((success)=>{
+                this.afAuth.auth.currentUser.sendEmailVerification()
+                .then((success)=>{
+                    // console.log("se envio correo.");
+                }).catch((err)=>{
+                    console.log(err);
+                    this.error=err;
+                });
+                
+                this.router.navigateByUrl('/auth/login');
+            }).catch((err)=>{
+                this.error= err;
+                console.log(err);
+            });
           
-          console.log(success);
-          this.afAuth.auth.currentUser.sendEmailVerification()
-          .then((success)=>{
-              // console.log("se envio correo.");
-          }).catch((err)=>{
-              console.log(err);
-              this.error=err;
-          });
-          this.afAuth.auth.currentUser.updateProfile({displayName:name,photoURL:''})
-          .then((success)=>{
-              // console.log("datos actualizacos");
-              this.router.navigateByUrl('/auth/login');
-          }).catch((err)=>{
-              this.error= err;
-              console.log(err);
-          });
-          const itemObservable = this.db.object('/users/'+success.uid);
-          itemObservable.set({ 
-              nombreMostrar: name,
-              fechaCreacion:new Date().getTime(),
-              roles: {admin:false,ecommerce:false},
-              opciones:{configuracionInicial:false}
-          });
       }).catch((err)=>{
           this.error=err;
           console.log("errror: "+err);

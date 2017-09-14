@@ -12,7 +12,7 @@ declare var $: any;
 })
 export class RegisterComponent implements OnInit {
   test: Date = new Date();
-  name: string;
+  nombreUsuario: string;
   email: string;
   password: string;
 
@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
   }
   crearUsuario() {
     // console.log(this.email+' '+this.password);
-    this.servicio.crearUsuario(this.name, this.email, this.password);
+    this.servicio.crearUsuario(this.nombreUsuario, this.email, this.password);
   }
 
 }

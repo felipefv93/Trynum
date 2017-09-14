@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
+import { Usuario } from "../modelos/usuario";
 
 @Injectable()
 export class UsuarioService {
@@ -22,7 +23,7 @@ export class UsuarioService {
              console.log(this.datosUsuario);
              resolve(true);
          },(err)=>{
-           console.log(err);
+        //    console.log(err);
            resolve(false);
          })
         
@@ -32,39 +33,53 @@ export class UsuarioService {
         
       });
    }
-
-  crearUsuario(uid:any) {
+   actualizarDatosUsuario():Promise<any>{
+    return new Promise(resolve=>{
+        resolve(this.db.object('/users/'+this.usuario.uid).update(this.datosUsuario));
+    })
+   }
+   actualizarImagenPerfil(imagen:string):Promise<any>{
+       return new Promise(resolve=>{
+        this.usuario.updateProfile({
+            displayName:this.usuario.displayName,
+            photoURL:imagen
+        });
+        resolve(true);
+       });
+   }
+  crearUsuario(uid:any,nombreUsuario:string) {
+      console.log(uid);
     const itemObservable = this.db.object('/users/' + uid);
-    itemObservable.set({
-      nombreMostrar: name,
-      fechaCreacion: new Date().getTime(),
-      roles: { admin: false, ecommerce: false },
-      opciones: { configuracionInicial: false }
-    });
+    var usu= new Usuario();
+    usu.nombreUsuario=nombreUsuario;
+    usu.fechaCreacion= new Date().getTime();
+    usu.nombreMostrar=nombreUsuario;
+    itemObservable.set(usu);
 
   }
-  verificarUsuario(success:any):boolean{
-    
-          const itemObservable = this.db.object('/users/'+success.user.uid);
-          itemObservable.subscribe(u=>{
-              if(u.fechaCreacion == undefined){
-                  itemObservable.set({ 
+  verificarUsuario(success:any):Promise<boolean>{
+      return new Promise(resolve => {
+          const itemObservable = this.db.object('/users/' + success.user.uid);
+          itemObservable.subscribe(u => {
+              if (u.fechaCreacion == undefined) {
+                  itemObservable.set({
                       nombreMostrar: success.user.displayName,
-                      fechaCreacion:new Date().getTime(),
-                      roles: {admin:false,ecommerce:false},
-                      opciones:{configuracionInicial:false}
+                      fechaCreacion: new Date().getTime(),
+                      roles: { admin: false, ecommerce: false },
+                      opciones: { configuracionInicial: false }
                   });
-                  this.router.navigateByUrl('dashboard');
-                  return true;
-              }else{
+                  
+                  resolve(true);
+              } else {
                   this.datosUsuario = itemObservable;
-                  this.router.navigateByUrl('dashboard');
-                  return true;
+                  resolve(true);
+
               }
-          },err=>{
-          // console.log(err);
-          return true;
+          }, err => {
+              resolve(false);
+          })
       })
-      return true;
+          
+      
       }
 }
