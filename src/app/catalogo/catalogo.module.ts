@@ -6,13 +6,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductosComponent } from './productos/productos.component';
 import { EcommerceComponent } from './ecommerce/ecommerce.component';
 import { CatalogoRoutes } from './catalogo.routing';
+
+import { ToolModule } from '../tools/tools.module';
 // import { PruebaComponent } from './prueba/prueba.component';
 
 @NgModule({
     imports: [
       CommonModule,
       RouterModule.forChild(CatalogoRoutes),
-      FormsModule
+      FormsModule,
+      ToolModule.forRoot()
     ],
     declarations: [
         ProductosComponent,

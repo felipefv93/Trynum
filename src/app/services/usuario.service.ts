@@ -20,7 +20,6 @@ export class UsuarioService {
         // resolve(this.datosUsuario);
          this.usuarioObser.subscribe((datos)=>{
              this.datosUsuario= datos;
-             console.log(this.datosUsuario);
              resolve(true);
          },(err)=>{
         //    console.log(err);

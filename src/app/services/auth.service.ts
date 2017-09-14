@@ -32,7 +32,6 @@ export class AuthService {
           this.usuario=auth;
           this.isLogged=true;
           this.servicioUsuario.obtenerDatosUsuario().then((success)=>{
-              console.log(success);
               resolve(true);
           }).catch((err)=>{
                   console.log(err);

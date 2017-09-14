@@ -20,6 +20,7 @@ export const firebaseConfig = {
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth.guard';
 import { UsuarioService } from './services/usuario.service';
+import { EcommerceService } from './services/ecommerce.service';
 //Rutas
 import { AppRoutes } from './app.routing';
 
@@ -49,7 +50,12 @@ import { NavbarModule } from './shared/navbar/navbar.module';
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [AuthService,AuthGuard,UsuarioService],
+  providers: [
+    AuthService,
+    AuthGuard,
+    UsuarioService,
+    EcommerceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
