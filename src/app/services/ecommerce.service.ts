@@ -9,6 +9,7 @@ export class EcommerceService {
   descargar:string;
   versiones:any[];
   ecommerces:FirebaseListObservable<any>;
+  habilitarEcommerce:boolean= false;
   // ecommerces:any[];
   listo:boolean = false;
   constructor(private firebaseApp:FirebaseApp,public usuarioServicio:UsuarioService,
