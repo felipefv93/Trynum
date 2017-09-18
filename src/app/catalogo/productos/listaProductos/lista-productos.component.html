@@ -1,0 +1,46 @@
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header card-header-icon" data-background-color="rose">
+            <a href="javascript:void(0)" (click)="servicio.habilitarEcommerce=!servicio.habilitarEcommerce"><i class="material-icons">add</i></a>
+            
+        </div>
+        <div class="card-content" >
+            <h4 class="card-title">Productos</h4>
+            <div class="card-title"></div>
+            <div class="table-responsive">
+                <table class="table">
+                        <thead>
+                            <tr>
+                              <th class="text-center">{{ tableData1.headerRow[0] }}</th>
+                              <th>{{ tableData1.headerRow[1] }}</th>
+                              <th>{{ tableData1.headerRow[2] }}</th>
+                              <th>{{ tableData1.headerRow[3] }}</th>
+                              <th >{{ tableData1.headerRow[4] }}</th>
+                              <th class="text-right">{{ tableData1.headerRow[5] }}</th>
+                            </tr>
+                        </thead>
+                      <tbody>
+                          <!-- <tr *ngFor="let ecommerce of servicio.ecommerces | async; let i=index;">
+                              <td class="text-center">{{i+1}}</td>
+                              <td>{{ecommerce.nombreEcommerce}}</td>
+                              <td>{{ecommerce.linkEcommerce}}</td>
+                              <td>{{ecommerce.fechaCreacion | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                              <td>{{ecommerce.estado |estado}}</td>
+                              <td class="td-actions text-right">
+                                   <button type="button" rel="tooltip" class="btn btn-info ">
+                                      <i class="material-icons">person</i>
+                                  </button> 
+                                  <button type="button" rel="tooltip" class="btn btn-success " (click)="editarProducto(producto)">
+                                      <i class="material-icons">edit</i>
+                                  </button>
+                                   <button type="button" rel="tooltip" class="btn btn-danger ">
+                                      <i class="material-icons">close</i>
+                                  </button> 
+                              </td>
+                          </tr>  -->
+                      </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

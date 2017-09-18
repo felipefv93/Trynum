@@ -1,3 +1,41 @@
-<p>
-  productos works!
-</p>
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="nav-center">
+                    <ul class="nav nav-pills nav-pills-warning nav-pills-icons" role="tablist">
+                        <!--
+            color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-pills-warning","nav-pills-danger"
+        -->
+                        <li class="active">
+                            <a href="#description-1" role="tab" data-toggle="tab">
+                                <i class="material-icons">info</i> Description
+                            </a>
+                        </li>
+                        <li *ngIf="false">
+                            <a href="#schedule-1" role="tab" data-toggle="tab">
+                                <i class="material-icons">location_on</i> Location
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tasks-1" role="tab" data-toggle="tab">
+                                <i class="material-icons">gavel</i> Legal Info
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tasks-2" role="tab" data-toggle="tab">
+                                <i class="material-icons">help_outline</i> Help Center
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div >
+                  <lista-productos></lista-productos>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+

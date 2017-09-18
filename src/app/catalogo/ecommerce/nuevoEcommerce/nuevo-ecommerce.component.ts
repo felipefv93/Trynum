@@ -16,7 +16,7 @@ interface FileReaderEvent extends Event {
 })
 
 export class NuevoEcommerceComponent implements OnInit,OnChanges,AfterViewInit {
-    habilitarEcommerce:boolean=true;
+    
     ecommerce:any={
       nombreEcommerce:'',
       linkEcommerce:''
@@ -31,6 +31,9 @@ export class NuevoEcommerceComponent implements OnInit,OnChanges,AfterViewInit {
         this.ecommerce.usuarioCreacion=this.servicio.usuarioServicio.usuario.uid
         this.servicio.guardarEcommerce(this.ecommerce);
         this.servicio.habilitarEcommerce = !this.servicio.habilitarEcommerce;
+      }
+      cancelar(){
+        this.servicio.habilitarEcommerce=false;
       }
     readURL(input) {
         if (input.files && input.files[0]) {
@@ -137,7 +140,11 @@ export class NuevoEcommerceComponent implements OnInit,OnChanges,AfterViewInit {
             var $current = index + 1;
     
             var $wizard = navigation.closest('.wizard-card');
-    
+            if($current==1){
+              $($wizard).find('.btn-cancelar').show();
+            }else{
+              $($wizard).find('.btn-cancelar').hide();
+            }
             // If it's the last tab then hide the last button and show the finish instead
             if ($current >= $total) {
               $($wizard).find('.btn-next').hide();
@@ -219,7 +226,7 @@ export class NuevoEcommerceComponent implements OnInit,OnChanges,AfterViewInit {
         });
     
         $('.set-full-height').css('height', 'auto');
-        this.habilitarEcommerce=false;
+        
       }
     
       ngOnChanges() {
