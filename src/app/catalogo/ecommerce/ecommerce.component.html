@@ -4,8 +4,11 @@
         <div *ngIf="servicio.habilitarEcommerce">
             <nuevo-ecommerce></nuevo-ecommerce>
         </div>
-        <div *ngIf="!servicio.habilitarEcommerce">
+        <div *ngIf="!servicio.habilitarEcommerce && !servicio.importarProductos">
             <lista-ecommerce></lista-ecommerce>
+        </div>
+        <div *ngIf="servicio.importarProductos">
+            <importar-productos></importar-productos>
         </div>
         
         

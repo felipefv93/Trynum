@@ -10,16 +10,16 @@ export class EcommerceService {
   versiones:any[];
   ecommerces:FirebaseListObservable<any>;
   habilitarEcommerce:boolean= false;
+  importarProductos:boolean=false;
+  ecommerceEnUso:any;
   // ecommerces:any[];
   listo:boolean = false;
   constructor(private firebaseApp:FirebaseApp,public usuarioServicio:UsuarioService,
     private db:AngularFireDatabase) { 
-      this.ecommerces=this.db.list('/ecommerces',{
-        query:{
-          orderByChild:'usuarioCreacion',
-          equalTo:this.usuarioServicio.usuario.uid
-        }
-      });
+      this.usuarioServicio.obtenerEcommerces().then((success)=>{
+        
+        this.ecommerces=success;
+      })
       this.obtenerVersiones();
 
     }
@@ -35,6 +35,11 @@ export class EcommerceService {
         },(err)=>{
 
         });
+      });
+    }
+    obtenerDatosVersion(version:string):Promise<FirebaseObjectObservable<any>>{
+      return new Promise(resolve=>{
+        resolve(this.db.object('/versiones/'+version));
       });
     }
     guardarEcommerce(ecommerce){

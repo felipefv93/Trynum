@@ -21,6 +21,10 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth.guard';
 import { UsuarioService } from './services/usuario.service';
 import { EcommerceService } from './services/ecommerce.service';
+import { ProductoService } from './services/producto.service';
+import { ImportarProductoService } from './services/importar-producto.service';
+import { HttpService } from './services/http.service';
+import { MensajesService } from './services/mensajes';
 //Rutas
 import { AppRoutes } from './app.routing';
 
@@ -54,7 +58,11 @@ import { NavbarModule } from './shared/navbar/navbar.module';
     AuthService,
     AuthGuard,
     UsuarioService,
-    EcommerceService
+    EcommerceService,
+    ProductoService,
+    ImportarProductoService,
+    HttpService,
+    MensajesService
   ],
   bootstrap: [AppComponent]
 })

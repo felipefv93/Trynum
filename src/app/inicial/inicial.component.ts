@@ -48,6 +48,7 @@ export class InicialComponent implements OnInit , OnChanges, AfterViewInit{
             // iRef.getDownloadURL().then(success=>{
             //   // console.log(success);
             // })
+        
             iRef.put(this.imagen).then((success) => {
                 this.servicio.actualizarImagenPerfil(success.metadata.downloadURLs[0])
                 .then((success)=>{

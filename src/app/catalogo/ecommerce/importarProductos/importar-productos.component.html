@@ -5,9 +5,9 @@
             
         </div>
         <div class="card-content" >
-            <h4 class="card-title">Ecommerces</h4>
+            <h4 class="card-title">Productos para importar</h4>
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                         <thead>
                             <tr>
                               <th class="text-center">{{ tableData1.headerRow[0] }}</th>
@@ -19,16 +19,18 @@
                             </tr>
                         </thead>
                       <tbody>
-                          <tr *ngFor="let ecommerce of servicio.ecommerces | async; let i=index;">
+                          <tr *ngFor="let producto of servicio.productosImportar.productos; let i=index;">
                               <td class="text-center">{{i+1}}</td>
-                              <td>{{ecommerce.nombreEcommerce}}</td>
-                              <td>{{ecommerce.linkEcommerce}}</td>
-                              <td>{{ecommerce.fechaCreacion | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
-                              <td>{{ecommerce.estado |estado}}</td>
+                              <td>{{producto.nombre}}</td>
+                              <td>{{producto.cantidad}}</td>
+                              <td>{{producto.precio | currency}}</td>
+                                <td>
+                                    <div class="img-container">
+                                        <!-- <img [src]="producto.urlImagen" alt="..."> -->
+                                    </div>
+                                </td>
                               <td class="td-actions text-right">
-                                   <button type="button" rel="tooltip" class="btn btn-info " (click)="importarProductos(ecommerce)">
-                                      <i class="material-icons">import_export</i>
-                                  </button> 
+                                    <input type="checkbox"  [(ngModel)]="producto.seleccionado" name="seleccionado">
                                   <button type="button" rel="tooltip" class="btn btn-success " (click)="editarProducto(producto)">
                                       <i class="material-icons">edit</i>
                                   </button>
@@ -57,6 +59,8 @@
                           </tr> -->
                       </tbody>
                 </table>
+                <button (click)="prueba()">Mostrar</button>
+                <button (click)="prueba2()">Quitar</button>
             </div>
         </div>
     </div>

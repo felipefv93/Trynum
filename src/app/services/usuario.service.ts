@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseObjectObservable,FirebaseListObservable } from 'angularfire2/database';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import { Usuario } from "../modelos/usuario";
@@ -56,7 +56,7 @@ export class UsuarioService {
     itemObservable.set(usu);
 
   }
-  verificarUsuario(success:any):Promise<boolean>{
+  verificarUsuario(success: any): Promise<boolean> {
       return new Promise(resolve => {
           const itemObservable = this.db.object('/users/' + success.user.uid);
           itemObservable.subscribe(u => {
@@ -67,7 +67,7 @@ export class UsuarioService {
                       roles: { admin: false, ecommerce: false },
                       opciones: { configuracionInicial: false }
                   });
-                  
+
                   resolve(true);
               } else {
                   this.datosUsuario = itemObservable;
@@ -78,7 +78,22 @@ export class UsuarioService {
               resolve(false);
           })
       })
-          
-      
-      }
+
+
+  }
+  obtenerProductos(): Promise<boolean>{
+      return new Promise(resolve=>{
+          this.db.list('')
+      })
+  }
+  obtenerEcommerces(): Promise<FirebaseListObservable<any>>{
+      return new Promise(resolve=>{
+        resolve (this.db.list('/ecommerces',{
+            query:{
+              orderByChild:'usuarioCreacion',
+              equalTo:this.usuario.uid
+            }
+          }));
+      });
+  }
 }
