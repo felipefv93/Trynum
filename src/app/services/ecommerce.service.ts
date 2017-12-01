@@ -9,6 +9,7 @@ export class EcommerceService {
   descargar:string;
   versiones:any[];
   ecommerces:FirebaseListObservable<any>;
+  ecommercesExternos:FirebaseListObservable<any>;
   habilitarEcommerce:boolean= false;
   importarProductos:boolean=false;
   ecommerceEnUso:any;
@@ -16,12 +17,18 @@ export class EcommerceService {
   listo:boolean = false;
   constructor(private firebaseApp:FirebaseApp,public usuarioServicio:UsuarioService,
     private db:AngularFireDatabase) { 
-      this.usuarioServicio.obtenerEcommerces().then((success)=>{
-        
-        this.ecommerces=success;
-      })
-      this.obtenerVersiones();
+      this.init();
 
+    }
+    init(){
+      this.usuarioServicio.obtenerEcommerces().then((success)=>{
+        this.ecommerces = success;
+      });
+      this.usuarioServicio.obtenerEcommercesExternos().then((success)=>{
+        
+        this.ecommercesExternos=success;
+      });
+      this.obtenerVersiones();
     }
     // obtenerEcommerces(){
     //   this.ecommercesObserv.subscribe(datos=>{
@@ -42,8 +49,20 @@ export class EcommerceService {
         resolve(this.db.object('/versiones/'+version));
       });
     }
-    guardarEcommerce(ecommerce){
-      this.ecommerces.push(ecommerce);
+    guardarEcommerceExterno(ecommerceExterno){
+      this.ecommercesExternos.push(ecommerceExterno);
+    }
+    crearEcommerce(nombreEcommerce:string):Promise<any>{
+      return new Promise(resolve=>{
+        console.log(nombreEcommerce);
+        var ecom = {nombreEcommerce:nombreEcommerce,
+         fechaCreacion:new Date().getTime(),
+          usuarioCreacion:this.usuarioServicio.usuario.uid};
+         var newId = this.ecommerces.push(ecom).key;
+         this.usuarioServicio.asignarEcommerceEnUso(newId);
+          
+      });
+      
     }
     /* Descargar Archivo
       let storageRef = this.firebaseApp.storage().ref();

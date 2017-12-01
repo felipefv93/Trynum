@@ -17,7 +17,7 @@ interface FileReaderEvent extends Event {
 
 export class NuevoEcommerceComponent implements OnInit,OnChanges,AfterViewInit {
     
-    ecommerce:any={
+    ecommerceExterno:any={
       nombreEcommerce:'',
       linkEcommerce:''
     }
@@ -25,11 +25,11 @@ export class NuevoEcommerceComponent implements OnInit,OnChanges,AfterViewInit {
     constructor(private servicio:EcommerceService) { }
 
     guardarEcommerce(){
-        this.ecommerce.version= this.version.$key;
-        this.ecommerce.fechaCreacion=new Date().getTime();
-        this.ecommerce.estado = true;
-        this.ecommerce.usuarioCreacion=this.servicio.usuarioServicio.usuario.uid
-        this.servicio.guardarEcommerce(this.ecommerce);
+        this.ecommerceExterno.version= this.version.$key;
+        this.ecommerceExterno.fechaCreacion=new Date().getTime();
+        this.ecommerceExterno.estado = true;
+        this.ecommerceExterno.usuarioCreacion=this.servicio.usuarioServicio.usuario.uid
+        this.servicio.guardarEcommerceExterno(this.ecommerceExterno);
         this.servicio.habilitarEcommerce = !this.servicio.habilitarEcommerce;
       }
       cancelar(){

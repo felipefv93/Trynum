@@ -10,6 +10,7 @@ export class Usuario{
     fechaCreacion:number;
     opciones:any;
     roles:any;
+    direccion:any;
 
     constructor(){
         this.nombre='';
@@ -23,6 +24,13 @@ export class Usuario{
         this.fechaCreacion=0;
         this.opciones={configuracionInicial:false};
         this.roles={admin:false,ecommerce:false};
+        this.direccion ={
+            calle:"",
+            numero:"",
+            ciudad:"",
+            estado:"",
+            pais:""
+        }
     }
     
 }

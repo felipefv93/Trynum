@@ -10,26 +10,54 @@
                 <table class="table table-striped">
                         <thead>
                             <tr>
+                                <th class="text-center"></th>
                               <th class="text-center">{{ tableData1.headerRow[0] }}</th>
                               <th>{{ tableData1.headerRow[1] }}</th>
                               <th>{{ tableData1.headerRow[2] }}</th>
                               <th>{{ tableData1.headerRow[3] }}</th>
-                              <th >{{ tableData1.headerRow[4] }}</th>
+                              <!-- <th >{{ tableData1.headerRow[4] }}</th> -->
                               <th class="text-right">{{ tableData1.headerRow[5] }}</th>
                             </tr>
                         </thead>
                       <tbody>
                           <tr *ngFor="let producto of servicio.productosImportar.productos; let i=index;">
+                            <td class="text-center">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="seleccionado" [(ngModel)]="producto.seleccionado">
+                                    </label>
+                                </div>
+                            </td>
                               <td class="text-center">{{i+1}}</td>
                               <td>{{producto.nombre}}</td>
                               <td>{{producto.cantidad}}</td>
                               <td>{{producto.precio | currency}}</td>
-                                <td>
+                                <!-- <td>
                                     <div class="img-container">
-                                        <!-- <img [src]="producto.urlImagen" alt="..."> -->
+                                        <img [src]="producto.urlImagen" alt="...">
                                     </div>
-                                </td>
+                                </td> -->
+                                <!-- <td>
+                                        <div [ngSwitch]="row.ischecked">
+                                            <div *ngSwitchCase="true">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" name="optionsCheckboxes" checked>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div *ngSwitchDefault>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" name="optionsCheckboxes">
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </td> -->
                               <td class="td-actions text-right">
+                                    
                                     <input type="checkbox"  [(ngModel)]="producto.seleccionado" name="seleccionado">
                                   <button type="button" rel="tooltip" class="btn btn-success " (click)="editarProducto(producto)">
                                       <i class="material-icons">edit</i>
@@ -59,9 +87,14 @@
                           </tr> -->
                       </tbody>
                 </table>
-                <button (click)="prueba()">Mostrar</button>
-                <button (click)="prueba2()">Quitar</button>
             </div>
+        </div>
+        <div class="card-footer">
+            <div class="col-md-2 col-md-offset-4">
+                    <button class="btn btn-success" (click)="guardarProductos()">Guardar Productos</button>
+            </div>
+            
+            <!-- <button (click)="prueba2()">Quitar</button> -->
         </div>
     </div>
 </div>

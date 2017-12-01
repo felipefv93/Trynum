@@ -16,4 +16,11 @@ export class ListaProductosComponent implements OnInit {
     constructor(private servicio:ProductoService) { }
 
     ngOnInit() { }
+
+    verProducto(uid:any){
+        console.log(uid.$key);
+        this.servicio.seleccionarProducto(uid.$key);
+        // this.servicio.producto = producto;
+        
+    }
 }

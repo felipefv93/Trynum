@@ -37,6 +37,11 @@ export class UsuarioService {
         resolve(this.db.object('/users/'+this.usuario.uid).update(this.datosUsuario));
     })
    }
+   asignarEcommerceEnUso(uidEcommerce:string):Promise<any>{
+    return new Promise(resolve=>{
+        resolve(this.db.object('/users/'+this.usuario.uid).update({ecommerceEnUso:uidEcommerce}));
+    })
+   }
    actualizarImagenPerfil(imagen:string):Promise<any>{
        return new Promise(resolve=>{
         this.usuario.updateProfile({
@@ -61,12 +66,13 @@ export class UsuarioService {
           const itemObservable = this.db.object('/users/' + success.user.uid);
           itemObservable.subscribe(u => {
               if (u.fechaCreacion == undefined) {
-                  itemObservable.set({
-                      nombreMostrar: success.user.displayName,
-                      fechaCreacion: new Date().getTime(),
-                      roles: { admin: false, ecommerce: false },
-                      opciones: { configuracionInicial: false }
-                  });
+                  this.crearUsuario(success.user.uid,success.user.displayName);
+                //   itemObservable.set({
+                //       nombreMostrar: success.user.displayName,
+                //       fechaCreacion: new Date().getTime(),
+                //       roles: { admin: false, ecommerce: false },
+                //       opciones: { configuracionInicial: false }
+                //   });
 
                   resolve(true);
               } else {
@@ -96,4 +102,14 @@ export class UsuarioService {
           }));
       });
   }
+  obtenerEcommercesExternos(): Promise<FirebaseListObservable<any>>{
+        return new Promise(resolve=>{
+        resolve (this.db.list('/ecommercesExternos',{
+            query:{
+                orderByChild:'usuarioCreacion',
+                equalTo:this.usuario.uid
+            }
+            }));
+        });
+    }
 }

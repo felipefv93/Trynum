@@ -1,7 +1,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header card-header-icon" data-background-color="rose">
-            <a href="javascript:void(0)" (click)="servicio.habilitarEcommerce=!servicio.habilitarEcommerce"><i class="material-icons">add</i></a>
+            <a href="javascript:void(0)" (click)="servicio.nuevoProducto()"><i class="material-icons">add</i></a>
             
         </div>
         <div class="card-content" >
@@ -23,24 +23,24 @@
                             </tr>
                         </thead>
                       <tbody>
-                          <!-- <tr *ngFor="let ecommerce of servicio.ecommerces | async; let i=index;">
+                          <tr *ngFor="let producto of servicio.productos | async; let i=index;">
                               <td class="text-center">{{i+1}}</td>
-                              <td>{{ecommerce.nombreEcommerce}}</td>
-                              <td>{{ecommerce.linkEcommerce}}</td>
-                              <td>{{ecommerce.fechaCreacion | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
-                              <td>{{ecommerce.estado |estado}}</td>
+                              <td>{{producto.nombre}}</td>
+                              <td>{{producto.cantidad}}</td>
+                              <td>{{producto.fechaCreacion | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                              <td>{{producto.estado | estado}}</td>
                               <td class="td-actions text-right">
-                                   <button type="button" rel="tooltip" class="btn btn-info ">
-                                      <i class="material-icons">person</i>
-                                  </button> 
-                                  <button type="button" rel="tooltip" class="btn btn-success " (click)="editarProducto(producto)">
+                                   <!-- <button type="button" (click)="verProducto(producto)" rel="tooltip" class="btn btn-info ">
+                                      <i class="material-icons">remove_red_eye</i>
+                                  </button>  -->
+                                  <button type="button" rel="tooltip" class="btn btn-success " (click)="verProducto(producto)">
                                       <i class="material-icons">edit</i>
                                   </button>
-                                   <button type="button" rel="tooltip" class="btn btn-danger ">
+                                   <!-- <button type="button" rel="tooltip" class="btn btn-danger ">
                                       <i class="material-icons">close</i>
-                                  </button> 
+                                  </button>  -->
                               </td>
-                          </tr>  -->
+                          </tr> 
                       </tbody>
                 </table>
             </div>

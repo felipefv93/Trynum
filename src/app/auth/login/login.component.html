@@ -9,7 +9,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" >BandApp</a>
+              <a class="navbar-brand" >TryNum</a>
           </div>
           <div class="collapse navbar-collapse" id="menu-example">
               <ul class="nav navbar-nav navbar-right">
@@ -33,13 +33,13 @@
                       <form #formData="ngForm" (submit)="emailLogin()">
                           <div class="card card-login card-hidden">
                               <div class="card-header text-center" data-background-color="rose">
-                                  <h4 class="card-title">Login</h4>
+                                  <h4 class="card-title">Inicio Sesión</h4>
                                   <div class="social-line">
                                       <a (click)="facebookLogin()" class="btn btn-just-icon btn-simple">
                                           <i class="fa fa-facebook-square"></i>
                                       </a>
-                                      <a href="#pablo" class="btn btn-just-icon btn-simple">
-                                          <i class="fa fa-twitter"></i>
+                                      <a href="javascript:void(0)"class="btn btn-just-icon btn-simple">
+                                          <!-- <i class="fa fa-twitter"></i> -->
                                       </a>
                                       <a (click)="googleLogin()" class="btn btn-just-icon btn-simple">
                                           <i class="fa fa-google-plus"></i>
@@ -47,7 +47,7 @@
                                   </div>
                               </div>
                               <p class="category text-center">
-                                  Or Be Classical
+                                  O de forma clasica
                               </p>
                               <div class="card-content">
                                   <div class="input-group">
@@ -55,7 +55,7 @@
                                           <i class="material-icons">email</i>
                                       </span>
                                       <div class="form-group label-floating">
-                                          <label class="control-label">Email address</label>
+                                          <label class="control-label">Correo Electronico</label>
                                           <input type="email" class="form-control" [(ngModel)]="email" name="email">
                                       </div>
                                   </div>
@@ -64,13 +64,13 @@
                                           <i class="material-icons">lock_outline</i>
                                       </span>
                                       <div class="form-group label-floating">
-                                          <label class="control-label">Password</label>
+                                          <label class="control-label">Contraseña</label>
                                           <input type="password" class="form-control" [(ngModel)]="password" name="password">
                                       </div>
                                   </div>
                               </div>
                               <div class="footer text-center">
-                                  <button type="submit" class="btn btn-rose btn-simple btn-wd btn-lg">Let's go</button>
+                                  <button type="submit" class="btn btn-rose btn-simple btn-wd btn-lg">Entrar</button>
                               </div>
                           </div>
                       </form>
@@ -78,7 +78,7 @@
               </div>
           </div>
       </div>
-      <footer class="footer">
+      <!-- <footer class="footer">
           <div class="container">
               <nav class="pull-left">
                   <ul>
@@ -110,6 +110,6 @@
                   <a href="https://www.creative-tim.com">Creative Tim</a>, made with love for a better web
               </p>
           </div>
-      </footer>
+      </footer> -->
   </div>
 </div>

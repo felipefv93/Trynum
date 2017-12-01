@@ -29,23 +29,28 @@ export class ListaEcommerceComponent implements OnInit {
     
     importarProductos(ecommerce){
         this.servicio.ecommerceEnUso=ecommerce;
-        this.servicio.obtenerDatosVersion(ecommerce.version)
-        .then((success)=>{
-            success.subscribe((datos)=>{
-                this.importarProductoService.importarProductos(ecommerce.linkEcommerce+''+datos.rutaImportar)
-                .then((success)=>{
-                    this.importarProductoService.obtenerImagenesPrestashop(ecommerce.linkEcommerce)
-                    .then((success)=>{
-                        console.log(this.importarProductoService.productosImportar);
-                    })
-                    this.servicio.importarProductos = true;
-                }).catch((err)=>{
-                    console.log(err);
-                })
+        this.importarProductoService.importarProductos2().then(success=>{
+            console.log(success);
+        }).catch(err=>{
+            console.log(err);
+        });
+        // this.servicio.obtenerDatosVersion(ecommerce.version)
+        // .then((success)=>{
+        //     success.subscribe((datos)=>{
+        //         this.importarProductoService.importarProductos(ecommerce.linkEcommerce+''+datos.rutaImportar)
+        //         .then((success)=>{
+        //             this.importarProductoService.obtenerImagenesPrestashop(ecommerce.linkEcommerce)
+        //             .then((success)=>{
+        //                 console.log(this.importarProductoService.productosImportar);
+        //             })
+        //             this.servicio.importarProductos = true;
+        //         }).catch((err)=>{
+        //             console.log(err);
+        //         })
                 
-            },(err)=>{
+        //     },(err)=>{
 
-            });
-        })
+        //     });
+        // })
     }
 }

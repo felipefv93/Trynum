@@ -19,7 +19,7 @@
                             </tr>
                         </thead>
                       <tbody>
-                          <tr *ngFor="let ecommerce of servicio.ecommerces | async; let i=index;">
+                          <tr *ngFor="let ecommerce of servicio.ecommercesExternos | async; let i=index;">
                               <td class="text-center">{{i+1}}</td>
                               <td>{{ecommerce.nombreEcommerce}}</td>
                               <td>{{ecommerce.linkEcommerce}}</td>
@@ -29,12 +29,12 @@
                                    <button type="button" rel="tooltip" class="btn btn-info " (click)="importarProductos(ecommerce)">
                                       <i class="material-icons">import_export</i>
                                   </button> 
-                                  <button type="button" rel="tooltip" class="btn btn-success " (click)="editarProducto(producto)">
+                                  <!-- <button type="button" rel="tooltip" class="btn btn-success " (click)="editarProducto(producto)">
                                       <i class="material-icons">edit</i>
                                   </button>
                                    <button type="button" rel="tooltip" class="btn btn-danger ">
                                       <i class="material-icons">close</i>
-                                  </button> 
+                                  </button>  -->
                               </td>
                           </tr> 
                           <!-- <tr *ngFor="let row of tableData1.dataRows">

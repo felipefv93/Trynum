@@ -8,7 +8,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" >BandApp</a>
+                <a class="navbar-brand" >TryNum</a>
             </div>
             <div class="collapse navbar-collapse" id="menu-example">
                 <ul class="nav navbar-nav navbar-right">
@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1" >
                     <div class="card card-signup" ><!--Form-->
-                        <h2 class="card-title text-center">Register</h2>
+                        <h2 class="card-title text-center">Registro</h2>
                         <div class="row">
                             <div class="col-md-5 col-md-offset-1">
                                 <div class="card-content">
@@ -69,17 +69,18 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="social text-center">
-                                    <button class="btn btn-just-icon btn-round btn-twitter">
-                                        <i class="fa fa-twitter"></i>
-                                    </button>
-                                    <button class="btn btn-just-icon btn-round btn-dribbble">
-                                        <i class="fa fa-dribbble"></i>
-                                    </button>
-                                    <button class="btn btn-just-icon btn-round btn-facebook">
+                                    <button class="btn btn-just-icon btn-round btn-facebook" (click)="servicio.facebookLogin()">
                                         <i class="fa fa-facebook"> </i>
                                     </button>
-                                    <h4> or be classical </h4>
+                                    <!-- <button class="btn btn-just-icon btn-round btn-dribbble">
+                                        <i class="fa fa-dribbble"></i>
+                                    </button> -->
+                                    <button class="btn btn-just-icon btn-round btn-google" (click)="servicio.googleLogin()">
+                                        <i class="fa fa-google"> </i>
+                                    </button>
+                                    <h4> o de la forma clasica </h4>
                                 </div>
+                                
                                 <form class="form" (ngSubmit)="crearUsuario()">
                                     <div class="card-content">
                                         <div class="input-group">

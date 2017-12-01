@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { ProductosComponent } from './productos/productos.component';
-import { EcommerceComponent } from './ecommerce/ecommerce.component';
+import { EcommerceExternoComponent } from './ecommerce/ecommerce-externo.component';
 
 export const CatalogoRoutes: Routes = [
     {
@@ -13,7 +13,7 @@ export const CatalogoRoutes: Routes = [
     {
         path: '',
         children: [ {
-         path: 'ecommerce',
-        component: EcommerceComponent
+         path: 'ecommerceExterno',
+        component: EcommerceExternoComponent
     }]}
 ];

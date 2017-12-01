@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, AfterViewInit } from '@angular/core';
 import { FirebaseApp } from 'angularfire2';
 import { AngularFireDatabase,FirebaseListObservable } from 'angularfire2/database';
 import { UsuarioService } from '../services/usuario.service';
+import { EcommerceService } from '../services/ecommerce.service';
 import { Usuario } from '../modelos/usuario'
 import 'firebase/storage';
 import { Router } from "@angular/router";
@@ -25,12 +26,17 @@ export class InicialComponent implements OnInit , OnChanges, AfterViewInit{
   desing:boolean = true;
   code:boolean = true;
   develop:boolean = true;
-  datosUsuario:Usuario = new Usuario();
-
+  //datosUsuario:Usuario = new Usuario();
+  nombreEcommerce:string ="";
+  imagenPath:string  = "../../assets/img/default-avatar.png";
   constructor(private firebaseApp:FirebaseApp,
     private servicio:UsuarioService,
-    private router:Router){
-        
+    private router:Router,
+    private servicioEcommerce:EcommerceService){
+        console.log(this.servicio.datosUsuario)
+        if(this.servicio.usuario.photoURL != null){
+            this.imagenPath = this.servicio.usuario.photoURL;
+        }
   }
   prueba(event){
     console.log(event);
@@ -41,6 +47,7 @@ export class InicialComponent implements OnInit , OnChanges, AfterViewInit{
     this.servicio.datosUsuario.opciones.proveedor= $('#proveedor')[0].checked;
     this.servicio.datosUsuario.opciones.configuracionInicial=true;
     this.servicio.actualizarDatosUsuario().then((success)=>{
+        this.servicioEcommerce.crearEcommerce(this.nombreEcommerce);
         if(this.imagen!=undefined){
             let storageRef = this.firebaseApp.storage().ref();
             let path = "/img/perfil/"+this.servicio.usuario.uid; //+ this.imagen.name;
@@ -90,8 +97,17 @@ ngOnInit(){
         apellidoMaterno: {
             required: true,
             minlength: 3
+          },
+          nombreEcommerce: {
+            required: true,
+            minlength: 3
+          },
+          nombreUsuario: {
+            required: true,
+            minlength: 3
           }
         },
+        
 
         errorPlacement: function(error, element) {
             console.log(error);
